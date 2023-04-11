@@ -21,3 +21,32 @@ textarea {
     background-color: #777;
     border-color: #fff
 }
+
+nav {
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.navlink {
+    float: left;
+}
+
+.dellink {
+    float: right;
+    color: red;
+}
+
+.delbutton {
+    margin: 0 auto;
+    color: white;
+    background-color: red;
+    border: 3px solid black;
+    border-radius: 3px;
+    display: block;
+}
+
+#containerlist, #containershow {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 80px;
+}

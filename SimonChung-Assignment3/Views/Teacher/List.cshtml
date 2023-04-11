@@ -2,17 +2,21 @@
 @{
     ViewBag.Title = "List";
 }
+<div id="containerlist">
+    <nav>
+        <a class="navlink" href="/Teacher/New">New Teacher</a>
+    </nav>
 
-<h2>List</h2>
-<p>This page shows a list of teachers</p>
-<form action="/Teacher/List" method="GET">
-    <input type="text" name="SearchKey"/>
-    <input type="submit" value="Search"/>
+    <h2>Teachers List</h2>
+    <p>This page shows a list of teachers</p>
+    <form action="/Teacher/List" method="GET">
+        <input type="text" name="SearchKey" />
+        <input type="submit" value="Search" />
 
-</form>
+    </form>
 
-@foreach (var teacher in Model)
-            {
-                <div><a href="/Teacher/Show/@teacher.TeacherId">@teacher.Teacherfname @teacher.Teacherlname </a></div>
-            }
-   
+    @foreach (var teacher in Model)
+    {
+        <div><a href="/Teacher/Show/@teacher.TeacherId">@teacher.Teacherfname @teacher.Teacherlname </a></div>
+    }
+</div> 

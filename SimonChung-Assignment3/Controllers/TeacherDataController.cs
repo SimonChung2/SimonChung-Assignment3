@@ -38,7 +38,8 @@ namespace SimonChung_Assignment3.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL Query
-            cmd.CommandText = "Select * from Teachers where lower(teacherfname) like lower(@key) or lower(teacherlname) like lower(@key) or lower(concat(teacherfname, ' ', teacherlname)) like lower(@key)";
+            cmd.CommandText = "Select * from Teachers where lower(teacherfname) like lower(@key) or lower(teacherlname)" +
+                " like lower(@key) or lower(concat(teacherfname, ' ', teacherlname)) like lower(@key)";
 
             cmd.Parameters.AddWithValue("key", "%" + SearchKey + "%");
             cmd.Prepare();
@@ -119,5 +120,62 @@ namespace SimonChung_Assignment3.Controllers
             return NewTeacher;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <example>POST : /api/TeacherData/DeleteTeacher/9</example>
+
+        [HttpPost]
+     
+        public void DeleteTeacher(int id)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Estable a new query for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL Query
+            cmd.CommandText = "Delete from teachers where teacherid=@id";
+            cmd.Parameters.AddWithValue("id", id);
+            cmd.Prepare();
+            
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+
+        [HttpPost]
+        public void AddTeacher(Teacher NewTeacher)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Estable a new query for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL Query
+            cmd.CommandText = "insert into teachers (teacherfname, teacherlname, salary, employeenumber, hiredate  ) values (@Teacherfname,@Teacherlname,@Salary, @Employeenumber, @Hiredate)";
+            cmd.Parameters.AddWithValue("@Teacherfname", NewTeacher.Teacherfname);
+            cmd.Parameters.AddWithValue("@Teacherlname", NewTeacher.Teacherlname);
+            cmd.Parameters.AddWithValue("@Salary", NewTeacher.Salary);
+            cmd.Parameters.AddWithValue("@Employeenumber", NewTeacher.Employeenumber);
+            cmd.Parameters.AddWithValue("@Hiredate", NewTeacher.Hiredate);
+
+
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+
+        } 
     }
 }
