@@ -2,6 +2,7 @@
 using SimonChung_Assignment3.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -177,5 +178,35 @@ namespace SimonChung_Assignment3.Controllers
             Conn.Close();
 
         } 
+
+        public void UpdateTeacher(int id, [FromBody]Teacher TeacherInfo)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            Debug.WriteLine(TeacherInfo.Teacherfname);
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Estable a new query for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL Query
+            cmd.CommandText = "update teachers set teacherfname=@Teacherfname, teacherlname=@Teacherlname, salary=@Salary, employeenumber=@Employeenumber, hiredate=@Hiredate  where teacherid=@TeacherId";
+            cmd.Parameters.AddWithValue("@Teacherfname", TeacherInfo.Teacherfname);
+            cmd.Parameters.AddWithValue("@Teacherlname", TeacherInfo.Teacherlname);
+            cmd.Parameters.AddWithValue("@Salary", TeacherInfo.Salary);
+            cmd.Parameters.AddWithValue("@Employeenumber", TeacherInfo.Employeenumber);
+            cmd.Parameters.AddWithValue("@Hiredate", TeacherInfo.Hiredate);
+            cmd.Parameters.AddWithValue("@TeacherId", id);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+
+
     }
 }
